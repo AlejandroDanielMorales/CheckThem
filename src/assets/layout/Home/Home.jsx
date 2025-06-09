@@ -1,10 +1,10 @@
 
 import CheckForm from "../../components/CheckForm/CheckForm";
-import CheckList from "../../components/CheckList/CheckList";
 import CheckListDone from "../../components/CheckListDone/CheckListDone";
 import "./Home.css";
 import Banner from "../../components/Banner/Banner";
 import { useChecks } from "../../context/ChecksContext";
+import ChecksTabs from "../../components/ChecksTabs/ChecksTabs";
 
 
 export default function Home() {
@@ -16,7 +16,7 @@ export default function Home() {
       <div className="app-container">    
         <CheckForm addCheck={addCheck} />
         <div className="lists-container">
-          <CheckList/>
+          <ChecksTabs />
           <CheckListDone checks={checks} deleteCheck={deleteCheck}/>
         </div>
       </div>

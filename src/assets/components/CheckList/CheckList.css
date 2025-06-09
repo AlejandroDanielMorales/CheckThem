@@ -1,73 +1,187 @@
+/* Container */
 .check-container {
-  display: flex;
-  flex-direction: column;
-  align-items: top;
-  padding: 0;
-  width: 100%;
-  min-width: 20dvw;
-  min-width: 20dvw;
-  top: 0;
+  padding: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+span {
+  font-size:1.25rem;
+}
+/* Título principal */
+h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-weight: 900;
+  font-size: 1.5rem;
+  color: #34495e;
+  letter-spacing: 1.5px;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
 }
 
-.check-list {
-  display: flex;
-  flex-direction: column;
-  align-items: top;
-  justify-content: center;
-  padding: 0;
-  width: 100%;
-  min-width: 20dvw;
-
-  top: 0;
+/* Mensaje vacío */
+.empty-state {
+  text-align: center;
+  font-size: 1.4rem;
+  color: #7f8c8d;
+  font-style: italic;
 }
 
-.check-item {
+/* Grid tarjetas */
+.check-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+/* Tarjeta cheque */
+.check-card {
+  background: white;
+  border-radius: 20px;
+  padding: 1.8rem 2rem;
+  box-shadow:
+    0 10px 15px rgba(52, 152, 219, 0.3),
+    0 6px 10px rgba(41, 128, 185, 0.3);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: default;
+}
+
+.check-card:hover {
+  transform: translateY(-12px) scale(1.03);
+  box-shadow:
+    0 15px 25px rgba(41, 128, 185, 0.5),
+    0 8px 20px rgba(52, 152, 219, 0.5);
+}
+
+/* Header de tarjeta */
+.check-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 10px;
-  margin: 5px 0;
-  background-color: #f8f9fa;
-  border-radius: 5px;
-  border: 1px solid #ddd;
+  justify-content: space-between;
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: #2c3e50;
+  margin-bottom: 1rem;
+}
+
+.check-header .icon {
+  font-size: 2rem;
+  color: #2980b9;
+  margin-right: 0.8rem;
+}
+
+.check-title {
+  flex-grow: 1;
+  user-select: text;
+}
+
+/* Etiqueta estado */
+.status-tag {
+  padding: 0.3rem 0.9rem;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  user-select: none;
+}
+
+.status-tag.pending {
+  background: linear-gradient(45deg, #e74c3c, #c0392b);
+  animation: pulse 2s infinite;
+}
+.check-actions  {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+
+}
+.check-info {
+ position: relative;
+}
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 6px #e74c3c; }
+  50% { box-shadow: 0 0 14px #c0392b; }
+}
+
+/* Info cheque */
+.check-info p {
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+  color: #34495e;
+  user-select: text;
+}
+
+.amount {
+  font-weight: 900;
+  color: #2980b9;
+  font-size: 1.3rem;
+  letter-spacing: 0.03em;
+}
+
+/* Botones acciones */
+.check-actions {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.perform-btn,
+.delete-btn {
+  border: none;
+  padding: 0.65rem 1rem;
+  border-radius: 14px;
+  cursor: pointer;
+  font-size: 1.3rem;
+  transition: background-color 0.25s ease;
+  color: white;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+  user-select: none;
+
 }
 
 .perform-btn {
-  position: absolute;
-  bottom: 10px;
-  right: 60px;
-  padding: 8px 12px;
-  font-size: 14px;
-  background-color: hsl(99, 63%, 50%);
-  color: rgb(0, 0, 0);
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+  background: linear-gradient(45deg, #2ecc71, #27ae60);
 }
 
 .perform-btn:hover {
-  background-color: hsl(99, 63%, 60%);
+  background: linear-gradient(45deg, #27ae60, #229954);
+  box-shadow: 0 4px 12px rgba(39, 174, 96, 0.8);
 }
 
 .delete-btn {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  padding: 8px 12px;
-  font-size: 14px;
-  background-color: hsl(0, 63%, 50%);
-  color: rgb(0, 0, 0);
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+  background: linear-gradient(45deg, #e74c3c, #c0392b);
 }
 
 .delete-btn:hover {
-  background-color: hsl(0, 63%, 60%);
+  background: linear-gradient(45deg, #c0392b, #992d22);
+  box-shadow: 0 4px 12px rgba(192, 57, 43, 0.8);
+}
+/* Tamaños por defecto (para móviles, pantallas pequeñas) */
+.check-container h2 {
+  font-size: 1.5rem;
+  font-weight: 900;
+  margin-bottom: 1.5rem;
 }
 
-@media (max-width: 480px) {
-  .check-list {
-    max-width: 90%;
+.check-list .check-item {
+  font-size: 1.2rem;
+  /* otros estilos */
+}
+
+/* Media Query para pantallas grandes (ordenadores) */
+@media screen and (min-width: 1024px) {
+  .check-container h2 {
+    font-size: 1.8rem; /* Más pequeño en desktop */
+  }
+  
+  .check-list .check-item {
+    font-size: 1rem; /* Más pequeño en desktop */
   }
 }

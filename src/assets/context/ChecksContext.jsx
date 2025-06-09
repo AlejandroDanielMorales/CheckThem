@@ -16,8 +16,10 @@ function CheckProvider({ children }) {
         const data = res.data;
 
         const mapped = data.map((item) => ({
-          id: item._id,
+          _id: item._id,
+          amount: item.amount,
           text: `Cheque de ${item.providerName} - Monto $${item.amount}`,
+          dateOfEmission: new Date(item.dateOfEmission).toLocaleDateString(),
           releaseDate: new Date(item.dateOfEmission).toLocaleDateString(),
           dateOfExpiration: new Date(item.dateOfExpiration).toLocaleDateString(),
           providerName: item.providerName,
@@ -80,7 +82,12 @@ function CheckProvider({ children }) {
       // axios.delete(`http://localhost:3000/api/checks/${id}`);
     }
   };
-
+ 
+  const parseDate = (str) => {
+  if (!str) return new Date(NaN); // retorna fecha inválida
+  const [day, month, year] = str.split("/");
+  return new Date(`${year}-${month}-${day}`); // formato compatible con Date()
+}; 
   return (
     <TaskContext.Provider
       value={{
@@ -89,6 +96,7 @@ function CheckProvider({ children }) {
         addCheck,
         performCheck,
         deleteCheck,
+        parseDate,
       }}
     >
       {children}
