@@ -1,0 +1,48 @@
+.check-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    width: 100%;
+    z-index: 10;
+    position: sticky;
+    top: 0;
+    padding-block:10px;
+    background-color: #f0f2f5;
+
+  }
+  
+  .check-form input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .check-form button {
+    padding: 10px ;
+    font-size: 16px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .check-form button:hover {
+    background-color: #218838;
+  }
+  
+  @media (max-width: 480px) {
+    .check-form {
+      flex-direction: column;
+      align-items: center;
+    }
+    .check-form input {
+      width: 90%;
+    }
+  }
+  

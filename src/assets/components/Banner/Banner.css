@@ -1,0 +1,79 @@
+.banner {
+    width: 100%;
+    padding: 30px 20px;
+    background: linear-gradient(to right, #385da1, #2f3c85);
+    color: white;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.7s ease-out;
+  }
+  
+  .logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+  }
+  
+  .logo h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  .icon {
+    font-size: 3rem;
+  }
+  
+  /* Subtítulo */
+  .subtitle {
+    font-size: 1.2rem;
+    margin-top: 10px;
+    font-weight: 300;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  /* Responsivo */
+  @media (max-width: 768px) {
+    .logo h1 {
+      font-size: 2rem;
+    }
+  
+    .icon {
+      font-size: 2.5rem;
+    }
+  
+    .subtitle {
+      font-size: 1rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .banner {
+      padding: 20px 15px;
+    }
+  
+    .logo {
+      flex-direction: column;
+    }
+  
+    .subtitle {
+      font-size: 0.95rem;
+    }
+  }
+  
+  /* Animación */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
