@@ -19,15 +19,13 @@ function CheckProvider({ children }) {
         const mapped = data.map((item) => ({
           _id: item._id,
           amount: item.amount,
+          checkNumber: item.checkNumber,
+          state: item.state,
           text: `Cheque de ${item.providerName} - Monto $${item.amount}`,
           dateOfEmission: new Date(item.dateOfEmission).toLocaleDateString(),
           releaseDate: new Date(item.dateOfEmission).toLocaleDateString(),
           dateOfExpiration: new Date(item.dateOfExpiration).toLocaleDateString(),
           providerName: item.providerName,
-          resolveDate: item.payed
-            ? new Date(item.updatedAt).toLocaleDateString()
-            : "N/A",
-          state: item.payed ? "Realizada" : "Pendiente",
         }));
 
         setChecks(mapped);
@@ -129,6 +127,41 @@ const getNextChecksOfTheMonth = ({ month, year }) => {
     );
   });
 };
+const actualMonths = (() => {
+  const nextMonthDate = new Date(today);
+  nextMonthDate.setMonth(today.getMonth() + 1);
+
+  // Siempre incluimos el mes actual
+  const result = [{
+    month: today.getMonth(),
+    year: today.getFullYear()
+  }];
+
+  // Si el siguiente mes es distinto al actual (por ejemplo, no estamos en el último día del mes)
+  if (nextMonthDate.getMonth() !== today.getMonth() || nextMonthDate.getFullYear() !== today.getFullYear()) {
+    result.push({
+      month: nextMonthDate.getMonth(),
+      year: nextMonthDate.getFullYear()
+    });
+  }
+
+  return result;
+})();
+
+// Obtener cheques que vencieron hasta hoy pero dentro del rango de mes actual y el siguiente
+const getChecksOfActualMonths = () => {
+  const oneMonthLater = new Date(today);
+  oneMonthLater.setMonth(today.getMonth() + 1);
+
+  return checks.filter((check) => {
+    const expiration = parseDate(check.dateOfExpiration);
+    return (
+      expiration <= today &&
+      expiration >= new Date(today.getFullYear(), today.getMonth(), 1) &&
+      expiration <= oneMonthLater
+    );
+  });
+};
 
 
 const monthNames = [
@@ -150,6 +183,8 @@ const monthNames = [
         getLastChecksOfTheMonth,
         getNextChecksOfTheMonth,
         monthNames,
+        actualMonths,
+        getChecksOfActualMonths
       }}
     >
       {children}

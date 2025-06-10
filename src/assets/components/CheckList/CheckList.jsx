@@ -5,13 +5,11 @@ import { useChecks } from "../../context/ChecksContext";
 
 export default function CheckList({ checks }) {
   const { performCheck, deleteCheck, parseDate } = useChecks();
-  const today = new Date();
 
   return (
     <div className="check-cards-grid">
       {checks.map((check) => {
         const expirationDate = parseDate(check.dateOfExpiration);
-        const isExpired = expirationDate < today;
 
         return (
           <div key={check._id} className="check-card">
@@ -19,9 +17,20 @@ export default function CheckList({ checks }) {
               <FaMoneyCheckAlt className="icon" />
               <span className="check-title">{check.providerName}</span>
 
-              <span className={`status-tag ${isExpired ? "done" : "pending"}`}>
-                {isExpired ? "Cobrada" : "Pendiente"}
+             <span
+               className={`status-tag ${
+                 check.state === "pending"
+                   ? "pending"
+                   : check.state === "onPayDate"
+                   ? "on-pay-date"
+                   : check.state === "payed"
+                   ? "payed"
+                   : ""
+               }`}
+              >
+               {check.state}
               </span>
+
             </div>
 
             <div className="check-info">
@@ -38,7 +47,7 @@ export default function CheckList({ checks }) {
                 {expirationDate.toLocaleDateString()}
               </p>
 
-              {!isExpired && (
+              {check.state === "pending" || check.state === "onPayDate" && (
                 <div className="check-actions">
                   <button
                     className="perform-btn"
