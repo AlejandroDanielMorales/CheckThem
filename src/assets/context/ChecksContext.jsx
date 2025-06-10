@@ -7,6 +7,7 @@ export const useChecks = () => useContext(TaskContext);
 
 function CheckProvider({ children }) {
   const [checks, setChecks] = useState([]);
+  const today = new Date();
 
   // 🔄 Cargar cheques desde MongoDB al iniciar
   useEffect(() => {
@@ -88,6 +89,53 @@ function CheckProvider({ children }) {
   const [day, month, year] = str.split("/");
   return new Date(`${year}-${month}-${day}`); // formato compatible con Date()
 }; 
+
+const nextMonths = Array.from({ length: 12 }, (_, i) => {
+    const date = new Date(today.getFullYear(), today.getMonth() + i, 1);
+    return {
+      month: date.getMonth(),
+      year: date.getFullYear()
+    };
+  }); 
+
+const lastMonths = Array.from({ length: 12 }, (_, i) => {
+  const date = new Date(today.getFullYear(), today.getMonth() - i, 1);
+  return {
+    month: date.getMonth(),
+    year: date.getFullYear()
+  };
+});
+
+// Cheques vencidos hasta el mes actual
+const getLastChecksOfTheMonth = ({ month, year }) => {
+  return checks.filter((check) => {
+    const expiration = parseDate(check.dateOfExpiration);
+    return (
+      expiration.getMonth() === month &&
+      expiration.getFullYear() === year &&
+      expiration < today
+    );
+  });
+};
+
+// Cheques futuros (no vencidos) a partir del mes actual
+const getNextChecksOfTheMonth = ({ month, year }) => {
+  return checks.filter((check) => {
+    const expiration = parseDate(check.dateOfExpiration);
+    return (
+      expiration.getMonth() === month &&
+      expiration.getFullYear() === year &&
+      expiration >= today
+    );
+  });
+};
+
+
+const monthNames = [
+  "Ene", "Feb", "Mar", "Abr", "May", "Jun",
+  "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"
+];
+
   return (
     <TaskContext.Provider
       value={{
@@ -97,6 +145,11 @@ function CheckProvider({ children }) {
         performCheck,
         deleteCheck,
         parseDate,
+        nextMonths,
+        lastMonths,
+        getLastChecksOfTheMonth,
+        getNextChecksOfTheMonth,
+        monthNames,
       }}
     >
       {children}

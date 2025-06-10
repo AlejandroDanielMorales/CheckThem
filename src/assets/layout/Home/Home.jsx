@@ -8,7 +8,7 @@ import ChecksTabs from "../../components/ChecksTabs/ChecksTabs";
 
 
 export default function Home() {
-  const { checks, addCheck, deleteCheck } = useChecks();
+  const { addCheck , nextMonths , lastMonths , getNextChecksOfTheMonth , getLastChecksOfTheMonth } = useChecks();
 
   return (
     <>
@@ -16,8 +16,8 @@ export default function Home() {
       <div className="app-container">    
         <CheckForm addCheck={addCheck} />
         <div className="lists-container">
-          <ChecksTabs />
-          <CheckListDone checks={checks} deleteCheck={deleteCheck}/>
+          <ChecksTabs months={nextMonths} listTitle={"📋 Cheques Pendientes"} getChecks={getNextChecksOfTheMonth} />
+          <ChecksTabs months={lastMonths} listTitle={"✅ Cheques Cobrados"} getChecks={getLastChecksOfTheMonth} />
         </div>
       </div>
     </>
