@@ -111,7 +111,7 @@ const getLastChecksOfTheMonth = ({ month, year }) => {
     return (
       expiration.getMonth() === month &&
       expiration.getFullYear() === year &&
-      expiration < today
+      expiration < today && check.state === "payed"
     );
   });
 };
@@ -123,7 +123,7 @@ const getNextChecksOfTheMonth = ({ month, year }) => {
     return (
       expiration.getMonth() === month &&
       expiration.getFullYear() === year &&
-      expiration >= today
+      expiration >= today && check.state === "pending"
     );
   });
 };
@@ -138,7 +138,7 @@ const actualMonths = (() => {
   }];
 
   // Si el siguiente mes es distinto al actual (por ejemplo, no estamos en el último día del mes)
-  if (nextMonthDate.getMonth() !== today.getMonth() || nextMonthDate.getFullYear() !== today.getFullYear()) {
+  if (nextMonthDate.getMonth() !== today.getMonth() || nextMonthDate.getFullYear() !== today.getFullYear() ) {
     result.push({
       month: nextMonthDate.getMonth(),
       year: nextMonthDate.getFullYear()
@@ -158,7 +158,7 @@ const getChecksOfActualMonths = () => {
     return (
       expiration <= today &&
       expiration >= new Date(today.getFullYear(), today.getMonth(), 1) &&
-      expiration <= oneMonthLater
+      expiration <= oneMonthLater && check.state === "onPayDate"
     );
   });
 };

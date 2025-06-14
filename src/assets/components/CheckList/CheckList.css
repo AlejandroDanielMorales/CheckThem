@@ -74,8 +74,13 @@
   background: linear-gradient(45deg, #e74c3c, #c0392b);
   animation: pulse 2s infinite;
 }
-.status-tag.done {
-  background: linear-gradient(45deg, #2ecc71, #27ae60);
+
+.status-tag.payed {
+  background: linear-gradient(45deg, #52a742, #2fa52b);
+  animation: pulse 2s infinite;
+}
+.status-tag.onPayDate {
+  background: linear-gradient(45deg, #e7c941, #dfc94c);
   animation: none;
 }
 

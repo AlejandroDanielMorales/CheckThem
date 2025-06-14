@@ -22,13 +22,21 @@ export default function CheckList({ checks }) {
                  check.state === "pending"
                    ? "pending"
                    : check.state === "onPayDate"
-                   ? "on-pay-date"
+                   ? "onPayDate"
                    : check.state === "payed"
                    ? "payed"
                    : ""
                }`}
               >
-               {check.state}
+               {
+                 check.state === "pending"
+                   ? "Pendiente"
+                   : check.state === "onPayDate"
+                   ? "En fecha"
+                   : check.state === "payed"
+                   ? "Pagado"
+                   : ""
+               }
               </span>
 
             </div>
@@ -46,8 +54,7 @@ export default function CheckList({ checks }) {
                 <strong>Expira:</strong>{" "}
                 {expirationDate.toLocaleDateString()}
               </p>
-
-              {check.state === "pending" || check.state === "onPayDate" && (
+              {(check.state === "pending" || check.state === "onPayDate") && (
                 <div className="check-actions">
                   <button
                     className="perform-btn"
@@ -65,6 +72,7 @@ export default function CheckList({ checks }) {
                   </button>
                 </div>
               )}
+
             </div>
           </div>
         );
