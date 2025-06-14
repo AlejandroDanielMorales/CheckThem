@@ -20,6 +20,7 @@
 .check-container {
   padding: 2rem;
   max-width: 1000px;
+  min-width: 23.3dvw;
   margin: 0 auto;
   font-family: 'Poppins', sans-serif;
   background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
