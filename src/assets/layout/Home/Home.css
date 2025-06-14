@@ -2,9 +2,8 @@
     display: flex;
     justify-content: center;
     gap: 20px;
-    width: 100%;
-    max-width: 1200px;
-    min-height: 90vh;
+    width: 80dvw;
+    min-height: 80vh;
     align-items: flex-start;
     margin: 0 auto;
     h2{

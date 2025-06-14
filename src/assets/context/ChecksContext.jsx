@@ -8,6 +8,10 @@ export const useChecks = () => useContext(TaskContext);
 function CheckProvider({ children }) {
   const [checks, setChecks] = useState([]);
   const today = new Date();
+  const monthNames = [
+  "Ene", "Feb", "Mar", "Abr", "May", "Jun",
+  "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"
+];
 
   // 🔄 Cargar cheques desde MongoDB al iniciar
   useEffect(() => {
@@ -104,14 +108,34 @@ const lastMonths = Array.from({ length: 12 }, (_, i) => {
   };
 });
 
+const actualMonths = (() => {
+  const currentMonth = today.getMonth();
+  const currentYear = today.getFullYear();
+
+  let lastMonth = currentMonth - 1;
+  let lastYear = currentYear;
+
+  // Si estamos en enero, el mes anterior es diciembre del año anterior
+  if (lastMonth < 0) {
+    lastMonth = 11;
+    lastYear -= 1;
+  }
+
+  return [
+    { month: lastMonth, year: lastYear },
+    { month: currentMonth, year: currentYear }
+  ];
+})();
+
+
 // Cheques vencidos hasta el mes actual
 const getLastChecksOfTheMonth = ({ month, year }) => {
   return checks.filter((check) => {
     const expiration = parseDate(check.dateOfExpiration);
     return (
       expiration.getMonth() === month &&
-      expiration.getFullYear() === year &&
-      expiration < today && check.state === "payed"
+      expiration.getFullYear() === year && check.state === "payed" // ✅
+
     );
   });
 };
@@ -122,52 +146,23 @@ const getNextChecksOfTheMonth = ({ month, year }) => {
     const expiration = parseDate(check.dateOfExpiration);
     return (
       expiration.getMonth() === month &&
-      expiration.getFullYear() === year &&
-      expiration >= today && check.state === "pending"
+      expiration.getFullYear() === year && check.state === "pending" // ✅
+
     );
   });
 };
-const actualMonths = (() => {
-  const nextMonthDate = new Date(today);
-  nextMonthDate.setMonth(today.getMonth() + 1);
-
-  // Siempre incluimos el mes actual
-  const result = [{
-    month: today.getMonth(),
-    year: today.getFullYear()
-  }];
-
-  // Si el siguiente mes es distinto al actual (por ejemplo, no estamos en el último día del mes)
-  if (nextMonthDate.getMonth() !== today.getMonth() || nextMonthDate.getFullYear() !== today.getFullYear() ) {
-    result.push({
-      month: nextMonthDate.getMonth(),
-      year: nextMonthDate.getFullYear()
-    });
-  }
-
-  return result;
-})();
-
-// Obtener cheques que vencieron hasta hoy pero dentro del rango de mes actual y el siguiente
 const getChecksOfActualMonths = () => {
-  const oneMonthLater = new Date(today);
-  oneMonthLater.setMonth(today.getMonth() + 1);
-
   return checks.filter((check) => {
     const expiration = parseDate(check.dateOfExpiration);
     return (
-      expiration <= today &&
-      expiration >= new Date(today.getFullYear(), today.getMonth(), 1) &&
-      expiration <= oneMonthLater && check.state === "onPayDate"
+      expiration <= today && check.state === "onPayDate"
     );
   });
 };
 
+// Obtener cheques que vencieron hasta hoy pero dentro del rango de mes actual y el siguiente
 
-const monthNames = [
-  "Ene", "Feb", "Mar", "Abr", "May", "Jun",
-  "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"
-];
+
 
   return (
     <TaskContext.Provider
@@ -184,7 +179,7 @@ const monthNames = [
         getNextChecksOfTheMonth,
         monthNames,
         actualMonths,
-        getChecksOfActualMonths
+        getChecksOfActualMonths,
       }}
     >
       {children}

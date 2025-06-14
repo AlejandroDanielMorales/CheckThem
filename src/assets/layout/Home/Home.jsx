@@ -8,7 +8,7 @@ import ChecksTabs from "../../components/ChecksTabs/ChecksTabs";
 
 
 export default function Home() {
-  const { addCheck , nextMonths , lastMonths,actualMonths , getNextChecksOfTheMonth , getLastChecksOfTheMonth,getChecksOfActualMonths  } = useChecks();
+  const { addCheck , nextMonths , lastMonths,actualMonths , getNextChecksOfTheMonth , getLastChecksOfTheMonth,getChecksOfActualMonths } = useChecks();
 
   return (
     <>
