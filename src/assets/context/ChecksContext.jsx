@@ -45,7 +45,7 @@ function CheckProvider({ children }) {
   }, []);
 
   // 🟢 Simula agregar cheque local (esto se puede extender para hacer un POST a la API)
-const addCheck = (check) => {
+const addCheck = async (check) => {
   const newCheck = {
     ...check,
     state: "pending", // Estado inicial
@@ -55,13 +55,13 @@ const addCheck = (check) => {
     providerName: check.providerName,
   };
 
-  axios.post(`${API_URL}/checks`, newCheck);
+  await axios.post(`${API_URL}/checks`, newCheck);
   setChecks((prevChecks) => [...prevChecks, newCheck]);
 };
 
 
   // ✅ Simula marcar como pagado (debería hacer un PUT/PATCH a la API si querés persistir)
-  const performCheck = (id) => {
+   const performCheck = async (id) => {
     const accept = confirm("Desea marcar como cobrado este cheque?");
     if (accept) {
       const formattedDate = new Date().toLocaleString();
@@ -76,7 +76,7 @@ const addCheck = (check) => {
     }
   };
   
-  const deleteCheck = (id) => {
+  const deleteCheck = async (id) => {
     const result = await Swal.fire({
     title: '¿Eliminar cheque?',
     text: '¿Estás seguro que querés eliminar este cheque?',
