@@ -24,6 +24,8 @@ export default function CheckForm({ addCheck , onClose }) {
   }
 
   return (
+
+    <div className="modal-overlay">
     <form onSubmit={handleSubmit(handleAddCheck)} className="check-form">
       <input
         type="text"
@@ -68,5 +70,6 @@ export default function CheckForm({ addCheck , onClose }) {
       <button type="button" onClick={() => onClose(false)}>Cancelar</button>
 
     </form>
+    </div>
   );
 }
