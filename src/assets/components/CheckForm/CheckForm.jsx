@@ -41,6 +41,7 @@ export default function CheckForm({ addCheck , onClose }) {
         timer: 2000,
         showConfirmButton: false,
       });
+      onClose(false); 
     } catch (error) {
       Swal.fire({
         title: 'Error',
