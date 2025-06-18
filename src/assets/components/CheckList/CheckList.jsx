@@ -1,10 +1,10 @@
 import React from "react";
 import "./CheckList.css";
-import { FaCheck, FaTrash, FaMoneyCheckAlt } from "react-icons/fa";
+import { FaCheck, FaTrash, FaMoneyCheckAlt ,FaPencil} from "react-icons/fa";
 import { useChecks } from "../../context/ChecksContext";
 
 export default function CheckList({ checks }) {
-  const { performCheck, deleteCheck} = useChecks();
+  const { performCheck, deleteCheck , editCheck} = useChecks();
 
   const getStateLabel = (state) => {
     switch (state) {
@@ -58,14 +58,14 @@ export default function CheckList({ checks }) {
                 <span className="amount">${check.amount.toLocaleString()}</span>
               </p>
 
-              {(check.state === "pending" || check.state === "onPayDate") && (
+              {(check.state === "pending" ) && (
                 <div className="check-actions">
                   <button
                     className="perform-btn"
-                    onClick={() => performCheck(check._id)}
-                    title="Marcar como cobrado"
+                    onClick={() => editCheck(check._id)}
+                    title="Editar"
                   >
-                    <FaCheck />
+                    <FaPencil />
                   </button>
                   <button
                     className="delete-btn"
@@ -73,6 +73,17 @@ export default function CheckList({ checks }) {
                     title="Eliminar cheque"
                   >
                     <FaTrash />
+                  </button>
+                </div>
+              )}
+               {(check.state === check.state === "onPayDate") && (
+                <div className="check-actions">
+                  <button
+                    className="perform-btn"
+                    onClick={() => performCheck(check._id)}
+                    title="Marcar como cobrado"
+                  >
+                    <FaCheck />
                   </button>
                 </div>
               )}
