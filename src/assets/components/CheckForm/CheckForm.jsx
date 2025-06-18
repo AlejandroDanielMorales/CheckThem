@@ -2,7 +2,7 @@ import React from "react";
 import "./CheckForm.css";
 import { useForm } from "react-hook-form";
 
-export default function CheckForm({ addCheck }) {
+export default function CheckForm({ addCheck , onClose }) {
   const {
     register,
     handleSubmit,
@@ -65,6 +65,7 @@ export default function CheckForm({ addCheck }) {
       {errors.dateOfExpiration && <p className="form-error">{errors.dateOfExpiration.message}</p>}
 
       <button type="submit">Agregar cheque</button>
+      <button onClick={onClose(false)}>cancelar</button>
     </form>
   );
 }
