@@ -1,6 +1,9 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
+import Swal from "sweetalert2";
+
 const API_URL = import.meta.env.VITE_API_URL;
+
 
 const TaskContext = createContext();
 export const useChecks = () => useContext(TaskContext);
@@ -64,27 +67,51 @@ const addCheck = (check) => {
       const formattedDate = new Date().toLocaleString();
       const updatedChecks = checks.map((check) =>
         check.id === id
-          ? { ...check, state: "Realizada", resolveDate: formattedDate }
+          ? { ...check, state: "payed"}
           : check
       );
       setChecks(updatedChecks);
 
-      // Opcional: actualizar en backend
-      // axios.put(`http://localhost:3000/api/checks/${id}`, { payed: true });
+      await axios.put(`${API_URL}/checks/${id}`, { payed: true });
     }
   };
-
+  
   const deleteCheck = (id) => {
-    const accept = confirm("Desea eliminar esta tarea?");
-    if (accept) {
+    const result = await Swal.fire({
+    title: '¿Eliminar cheque?',
+    text: '¿Estás seguro que querés eliminar este cheque?',
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonText: 'Eliminar',
+    cancelButtonText: 'Cancelar',
+  });
+    if (result.isConfirmed) {
       const updatedChecks = checks.filter((check) => check.id !== id);
       setChecks(updatedChecks);
-
-      // Opcional: eliminar en backend
-      // axios.delete(`http://localhost:3000/api/checks/${id}`);
+      await axios.delete(`${API_URL}/checks/${id}`);
     }
   };
- 
+
+ const editCheck = async (id , updatedData ) => {
+  const result = await Swal.fire({
+    title: '¿Editar cheque?',
+    text: '¿Estás seguro que querés editar este cheque?',
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonText: 'Editar',
+    cancelButtonText: 'Cancelar',
+  });
+
+  if (result.isConfirmed) {
+    try {
+      await axios.put(`${API_URL}/checks/${id}`,updatedData);
+      Swal.fire('Editado', 'El cheque fue editado correctamente.', 'success');
+    } catch (error) {
+      Swal.fire('Error', 'No se pudo editar el cheque.', 'error');
+    }
+  }
+};
+
 const parseDate = (value) => new Date(value);
 
 const nextMonths = Array.from({ length: 12 }, (_, i) => {
@@ -176,6 +203,7 @@ const getChecksOfActualMonths = ({ month, year }) => {
         monthNames,
         actualMonths,
         getChecksOfActualMonths,
+        editCheck,
       }}
     >
       {children}
