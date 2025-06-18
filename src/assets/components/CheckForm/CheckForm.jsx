@@ -65,7 +65,8 @@ export default function CheckForm({ addCheck , onClose }) {
       {errors.dateOfExpiration && <p className="form-error">{errors.dateOfExpiration.message}</p>}
 
       <button type="submit">Agregar cheque</button>
-      <button onClick={onClose(false)}>cancelar</button>
+      <button type="button" onClick={() => onClose(false)}>Cancelar</button>
+
     </form>
   );
 }
