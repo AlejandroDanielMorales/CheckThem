@@ -78,7 +78,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 9999; /* bien arriba */
+  z-index: 999; /* bien arriba */
   animation: fadeIn 0.3s ease;
 }
 
