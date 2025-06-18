@@ -25,7 +25,7 @@ export default function Home() {
       <Banner />
       <div className="app-container">
         
-        <button onClick={()=> setActiveCheckForm(true)}>Agregar cheque</button>
+        <button className="addCheckBtn" onClick={()=> setActiveCheckForm(true)}>Agregar cheque</button>
         <div className="tabs-selector">
           <button onClick={() => setActiveTab("last")} className={activeTab === "last" ? "active" : ""}>✅ Cheques cobrados</button>
           <button onClick={() => setActiveTab("actual")} className={activeTab === "actual" ? "active" : ""}>🕒 Cheques en fecha</button>
