@@ -1,6 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
-import { v4 as uuidv4 } from "uuid";
 
 const TaskContext = createContext();
 export const useChecks = () => useContext(TaskContext);
@@ -21,16 +20,16 @@ function CheckProvider({ children }) {
         const data = res.data;
 
         const mapped = data.map((item) => ({
-          _id: item._id,
-          amount: item.amount,
-          checkNumber: item.checkNumber,
-          state: item.state,
-          text: `Cheque de ${item.providerName} - Monto $${item.amount}`,
-          dateOfEmission: new Date(item.dateOfEmission).toLocaleDateString(),
-          releaseDate: new Date(item.dateOfEmission).toLocaleDateString(),
-          dateOfExpiration: new Date(item.dateOfExpiration).toLocaleDateString(),
-          providerName: item.providerName,
-        }));
+  _id: item._id,
+  amount: item.amount,
+  checkNumber: item.checkNumber,
+  state: item.state,
+  text: `Cheque de ${item.providerName} - Monto $${item.amount}`,
+  dateOfEmission: new Date(item.dateOfEmission), // ✅ conservar como Date
+  dateOfExpiration: new Date(item.dateOfExpiration), // ✅
+  providerName: item.providerName,
+}));
+
 
         setChecks(mapped);
       } catch (error) {
@@ -42,21 +41,20 @@ function CheckProvider({ children }) {
   }, []);
 
   // 🟢 Simula agregar cheque local (esto se puede extender para hacer un POST a la API)
-  const addCheck = (text) => {
-    const finded = checks.find((check) => check.text === text);
-    if (finded === undefined) {
-      const newCheck = {
-        id: uuidv4(),
-        text,
-        releaseDate: new Date().toLocaleString(),
-        resolveDate: "N/A",
-        state: "Pendiente",
-      };
-      setChecks([...checks, newCheck]);
-    } else {
-      alert("La tarea ya existe");
-    }
+const addCheck = (check) => {
+  const newCheck = {
+    ...check,
+    state: "pending", // Estado inicial
+    dateOfEmission: new Date(check.dateOfEmission),  // ⬅️ Objeto Date válido
+    dateOfExpiration: new Date(check.dateOfExpiration),
+    amount: parseFloat(check.amount),
+    providerName: check.providerName,
   };
+
+  axios.post("http://localhost:3000/api/checks", newCheck);
+  setChecks((prevChecks) => [...prevChecks, newCheck]);
+};
+
 
   // ✅ Simula marcar como pagado (debería hacer un PUT/PATCH a la API si querés persistir)
   const performCheck = (id) => {
@@ -86,11 +84,7 @@ function CheckProvider({ children }) {
     }
   };
  
-  const parseDate = (str) => {
-  if (!str) return new Date(NaN); // retorna fecha inválida
-  const [day, month, year] = str.split("/");
-  return new Date(`${year}-${month}-${day}`); // formato compatible con Date()
-}; 
+const parseDate = (value) => new Date(value);
 
 const nextMonths = Array.from({ length: 12 }, (_, i) => {
     const date = new Date(today.getFullYear(), today.getMonth() + i, 1);
@@ -151,11 +145,12 @@ const getNextChecksOfTheMonth = ({ month, year }) => {
     );
   });
 };
-const getChecksOfActualMonths = () => {
+const getChecksOfActualMonths = ({ month, year }) => {
   return checks.filter((check) => {
     const expiration = parseDate(check.dateOfExpiration);
     return (
-      expiration <= today && check.state === "onPayDate"
+      expiration.getMonth() === month &&
+      expiration.getFullYear() === year && check.state === "onPayDate" // ✅
     );
   });
 };

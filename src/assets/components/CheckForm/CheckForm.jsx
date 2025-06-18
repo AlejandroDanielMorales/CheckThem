@@ -1,26 +1,70 @@
 import React from "react";
 import "./CheckForm.css";
-import { useForm } from 'react-hook-form';
+import { useForm } from "react-hook-form";
 
 export default function CheckForm({ addCheck }) {
-  const { register, handleSubmit, reset} = useForm();
-
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors }
+  } = useForm();
 
   function handleAddCheck(data) {
-    console.log(data);
-    addCheck(data.textTask); 
-    reset(); 
+    // Convertir fechas y monto antes de enviar
+    const checkData = {
+      providerName: data.providerName,
+      amount: parseFloat(data.amount),
+      dateOfEmission: new Date(data.dateOfEmission),
+      dateOfExpiration: new Date(data.dateOfExpiration),
+    };
+
+    addCheck(checkData);
+    reset();
   }
 
   return (
     <form onSubmit={handleSubmit(handleAddCheck)} className="check-form">
       <input
         type="text"
-        {...register("textTask")}
-        placeholder="Agregar una tarea"
-        maxLength={20}
+        {...register("providerName", {
+          required: "El proveedor es obligatorio",
+          maxLength: { value: 100, message: "Máximo 100 caracteres" },
+        })}
+        placeholder="Nombre del proveedor"
       />
-      <button type="submit">Agregar</button>
+      {errors.providerName && <p className="form-error">{errors.providerName.message}</p>}
+
+      <input
+        type="number"
+        step="0.01"
+        {...register("amount", {
+          required: "El monto es obligatorio",
+          min: { value: 0, message: "El monto debe ser positivo" },
+        })}
+        placeholder="Monto"
+      />
+      {errors.amount && <p className="form-error">{errors.amount.message}</p>}
+
+      <label>Fecha de emisión</label>
+      <input
+        type="date"
+        {...register("dateOfEmission", {
+          required: "La fecha de emisión es obligatoria",
+        })}
+      />
+      {errors.dateOfEmission && <p className="form-error">{errors.dateOfEmission.message}</p>}
+
+      <label>Fecha de vencimiento</label>
+      <input
+        type="date"
+        {...register("dateOfExpiration", {
+          required: "La fecha de vencimiento es obligatoria",
+        })}
+      />
+      {errors.dateOfExpiration && <p className="form-error">{errors.dateOfExpiration.message}</p>}
+
+      <button type="submit">Agregar cheque</button>
     </form>
   );
 }

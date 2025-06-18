@@ -2,7 +2,8 @@
     display: flex;
     justify-content: center;
     gap: 20px;
-    width: 80dvw;
+    max-width: 30dvw;
+    min-width: 30dvw;
     min-height: 80vh;
     align-items: flex-start;
     margin: 0 auto;
@@ -52,7 +53,32 @@
     flex-grow: 1;
     padding-bottom: 40px; /* Espacio extra para evitar que el botón se superponga con el texto */
   }
-  
+  .tabs-selector {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.tabs-selector button {
+  padding: 10px 20px;
+  background-color: #eee;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+.tabs-selector button:hover {
+  background-color: #ddd;
+}
+
+.tabs-selector button.active {
+  background-color: #007bff;
+  color: white;
+}
+
   
   @media (max-width: 768px) {
     .lists-container {

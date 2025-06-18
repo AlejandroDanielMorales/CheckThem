@@ -12,20 +12,21 @@
 /* Grid tarjetas */
 .check-cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(23.3dvw, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(20dvw, 1fr));
+  gap: 1rem;
 }
 
 /* Tarjeta cheque */
 .check-card {
   background: white;
-  border-radius: 20px;
-  padding: 1.8rem 2rem;
+  border-radius: 10px;
+  padding: 0.5rem 1rem;
   box-shadow:
     0 10px 15px rgba(52, 152, 219, 0.3),
     0 6px 10px rgba(41, 128, 185, 0.3);
   position: relative;
   overflow: hidden;
+
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: default;
 }
@@ -43,13 +44,13 @@
   align-items: center;
   justify-content: space-between;
   font-weight: 700;
-  font-size: 1.5rem;
+  font-size: 1rem;
   color: #2c3e50;
   margin-bottom: 1rem;
 }
 
 .check-header .icon {
-  font-size: 2rem;
+  font-size: 1rem;
   color: #2980b9;
   margin-right: 0.8rem;
 }
@@ -64,38 +65,48 @@
   padding: 0.3rem 0.9rem;
   border-radius: 12px;
   font-weight: 600;
-  font-size: 0.85rem;
+  font-size: 1rem;
   color: white;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   user-select: none;
 }
-
 .status-tag.pending {
   background: linear-gradient(45deg, #e74c3c, #c0392b);
-  animation: pulse 2s infinite;
+  animation: pulse-pending 2s infinite;
+}
+@keyframes pulse-pending {
+  0%, 100% { box-shadow: 0 0 6px #e74c3c; }
+  50% { box-shadow: 0 0 14px #c0392b; }
 }
 
+/* === Payed === */
 .status-tag.payed {
   background: linear-gradient(45deg, #52a742, #2fa52b);
-  animation: pulse 2s infinite;
+  animation: pulse-payed 2s infinite;
 }
+@keyframes pulse-payed {
+  0%, 100% { box-shadow: 0 0 6px #52a742; }
+  50% { box-shadow: 0 0 14px #2fa52b; }
+}
+
+/* === OnPayDate === */
 .status-tag.onPayDate {
   background: linear-gradient(45deg, #e7c941, #dfc94c);
-  animation: none;
+  animation: pulse-onpaydate 2s infinite;
+}
+@keyframes pulse-onpaydate {
+  0%, 100% { box-shadow: 0 0 6px #e7c941; }
+  50% { box-shadow: 0 0 14px #dfc94c; }
 }
 
 .check-actions  {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
+  top: 0.5rem;
+  right: 0.5rem;
 
 }
 .check-info {
  position: relative;
-}
-@keyframes pulse {
-  0%, 100% { box-shadow: 0 0 6px #e74c3c; }
-  50% { box-shadow: 0 0 14px #c0392b; }
 }
 
 /* Info cheque */
@@ -163,7 +174,15 @@
   font-size: 1.2rem;
   /* otros estilos */
 }
-
+.check-dates{
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap :0.5rem;
+  p{
+    font-size: 0.9rem;
+  }
+}
 /* Media Query para pantallas grandes (ordenadores) */
 @media screen and (min-width: 1024px) {
   .check-container h2 {

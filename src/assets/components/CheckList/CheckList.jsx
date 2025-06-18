@@ -4,12 +4,34 @@ import { FaCheck, FaTrash, FaMoneyCheckAlt } from "react-icons/fa";
 import { useChecks } from "../../context/ChecksContext";
 
 export default function CheckList({ checks }) {
-  const { performCheck, deleteCheck, parseDate } = useChecks();
+  const { performCheck, deleteCheck} = useChecks();
+
+  const getStateLabel = (state) => {
+    switch (state) {
+      case "pending":
+        return "Pendiente";
+      case "onPayDate":
+        return "En fecha";
+      case "payed":
+        return "Pagado";
+      default:
+        return "Desconocido";
+    }
+  };
+
+  const getStateClass = (state) => `status-tag ${state}`;
+
+  const monthStatus = checks.length > 0 ? getStateLabel(checks[0].state) : "—";
 
   return (
     <div className="check-cards-grid">
+      <h3>
+        Tienes {checks.length} cheque{checks.length !== 1 && "s"} {monthStatus.toLowerCase()} en este mes
+      </h3>
+
       {checks.map((check) => {
-        const expirationDate = parseDate(check.dateOfExpiration);
+        const expirationDate = new Date(check.dateOfExpiration).toLocaleDateString();
+        const emissionDate = new Date(check.dateOfEmission).toLocaleDateString();
 
         return (
           <div key={check._id} className="check-card">
@@ -17,43 +39,25 @@ export default function CheckList({ checks }) {
               <FaMoneyCheckAlt className="icon" />
               <span className="check-title">{check.providerName}</span>
 
-             <span
-               className={`status-tag ${
-                 check.state === "pending"
-                   ? "pending"
-                   : check.state === "onPayDate"
-                   ? "onPayDate"
-                   : check.state === "payed"
-                   ? "payed"
-                   : ""
-               }`}
-              >
-               {
-                 check.state === "pending"
-                   ? "Pendiente"
-                   : check.state === "onPayDate"
-                   ? "En fecha"
-                   : check.state === "payed"
-                   ? "Pagado"
-                   : ""
-               }
+              <span className={getStateClass(check.state)}>
+                {getStateLabel(check.state)}
               </span>
-
             </div>
 
             <div className="check-info">
+              <div className="check-dates">
+                <p>
+                  <strong>Emitido:</strong> {emissionDate}
+                </p>
+                <p>
+                  <strong>Expira:</strong> {expirationDate}
+                </p>
+              </div>
               <p>
                 <strong>Monto:</strong>{" "}
                 <span className="amount">${check.amount.toLocaleString()}</span>
               </p>
-              <p>
-                <strong>Emitido:</strong>{" "}
-                {parseDate(check.dateOfEmission).toLocaleDateString()}
-              </p>
-              <p>
-                <strong>Expira:</strong>{" "}
-                {expirationDate.toLocaleDateString()}
-              </p>
+
               {(check.state === "pending" || check.state === "onPayDate") && (
                 <div className="check-actions">
                   <button
@@ -72,7 +76,6 @@ export default function CheckList({ checks }) {
                   </button>
                 </div>
               )}
-
             </div>
           </div>
         );
