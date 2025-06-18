@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const TaskContext = createContext();
 export const useChecks = () => useContext(TaskContext);
@@ -16,7 +17,7 @@ function CheckProvider({ children }) {
   useEffect(() => {
     const fetchChecks = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/api/checks"); 
+        const res = await axios.get(`${API_URL}/checks`); 
         const data = res.data;
 
         const mapped = data.map((item) => ({
@@ -51,14 +52,14 @@ const addCheck = (check) => {
     providerName: check.providerName,
   };
 
-  axios.post("http://localhost:3000/api/checks", newCheck);
+  axios.post(`${API_URL}/checks`, newCheck);
   setChecks((prevChecks) => [...prevChecks, newCheck]);
 };
 
 
   // ✅ Simula marcar como pagado (debería hacer un PUT/PATCH a la API si querés persistir)
   const performCheck = (id) => {
-    const accept = confirm("Desea marcar como realizada esta tarea?");
+    const accept = confirm("Desea marcar como cobrado este cheque?");
     if (accept) {
       const formattedDate = new Date().toLocaleString();
       const updatedChecks = checks.map((check) =>
