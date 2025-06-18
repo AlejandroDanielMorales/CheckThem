@@ -1,6 +1,6 @@
 import React from "react";
 import "./CheckList.css";
-import { FaCheck, FaTrash, FaMoneyCheckAlt ,FaPencil} from "react-icons/fa";
+import { FaCheck, FaTrash, FaMoneyCheckAlt ,faPen } from "react-icons/fa";
 import { useChecks } from "../../context/ChecksContext";
 
 export default function CheckList({ checks }) {
@@ -65,7 +65,7 @@ export default function CheckList({ checks }) {
                     onClick={() => editCheck(check._id)}
                     title="Editar"
                   >
-                    <FaPencil />
+                    <faPen/>
                   </button>
                   <button
                     className="delete-btn"
