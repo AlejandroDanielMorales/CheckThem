@@ -1,6 +1,8 @@
 import React from "react";
 import "./CheckForm.css";
 import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
+
 
 export default function CheckForm({ addCheck , onClose }) {
   const {
@@ -10,18 +12,45 @@ export default function CheckForm({ addCheck , onClose }) {
     formState: { errors }
   } = useForm();
 
-  function handleAddCheck(data) {
-    // Convertir fechas y monto antes de enviar
-    const checkData = {
-      providerName: data.providerName,
-      amount: parseFloat(data.amount),
-      dateOfEmission: new Date(data.dateOfEmission),
-      dateOfExpiration: new Date(data.dateOfExpiration),
-    };
+  async function handleAddCheck(data) {
+  const checkData = {
+    providerName: data.providerName,
+    amount: parseFloat(data.amount),
+    dateOfEmission: new Date(data.dateOfEmission),
+    dateOfExpiration: new Date(data.dateOfExpiration),
+  };
 
-    addCheck(checkData);
-    reset();
+  const result = await Swal.fire({
+    title: '¿Agregar cheque?',
+    text: '¿Estás seguro que querés registrar este cheque?',
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonText: 'Sí, agregar',
+    cancelButtonText: 'Cancelar',
+  });
+
+  if (result.isConfirmed) {
+    try {
+      await addCheck(checkData);
+      reset();
+
+      Swal.fire({
+        title: 'Cheque agregado',
+        text: 'El cheque se registró correctamente.',
+        icon: 'success',
+        timer: 2000,
+        showConfirmButton: false,
+      });
+    } catch (error) {
+      Swal.fire({
+        title: 'Error',
+        text: 'Hubo un problema al agregar el cheque.',
+        icon: 'error',
+      });
+    }
   }
+}
+
 
   return (
 
