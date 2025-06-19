@@ -126,7 +126,6 @@
 
 /* Botones acciones */
 .check-actions {
-  margin-top: 1.5rem;
   display: flex;
   justify-content: flex-end;
   gap: 1rem;
