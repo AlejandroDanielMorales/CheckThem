@@ -1,6 +1,5 @@
 .lists-container {
     display: flex;
-    justify-content: center;
     max-width: 30dvw;
     min-width: 30dvw;
     min-height: 80vh;
@@ -88,6 +87,9 @@
     .task-container {
       width: 90%;
       max-width: 90%;
+    }
+    .addCheckBtn {
+    width: 90%;
     }
   }
   
