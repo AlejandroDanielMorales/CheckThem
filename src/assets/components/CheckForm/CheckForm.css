@@ -21,7 +21,8 @@
 .check-form label,
 .check-form button {
   font-family: inherit;
-  padding-block:5px;
+  padding:5px;
+  width:100%;
   font-size: 0.75rem;
   color: #2c3e50;
 }
@@ -31,6 +32,7 @@
 }
 .actions-group{
   display: flex;
+  margin: top 5px;
   flex-direction: row;
   justify-content: space-between;
   gap:0.5rem;

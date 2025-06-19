@@ -65,7 +65,7 @@ export default function CheckForm({ addCheck , onClose }) {
       <input
         type="text"
         {...register("providerName", {
-          required: "El proveedor es obligatorio",
+          required: "*El proveedor es obligatorio",
           maxLength: { value: 100, message: "Máximo 100 caracteres" },
         })}
         placeholder="Nombre del proveedor"
@@ -79,7 +79,7 @@ export default function CheckForm({ addCheck , onClose }) {
        <input
         type="text"
         {...register("checkNumber", {
-          required: "El número de cheque es obligatorio",
+          required: "*El número de cheque es obligatorio",
           maxLength: { value: 100, message: "Máximo 100 caracteres" },
         })}
         placeholder="Número de cheque"
@@ -94,7 +94,7 @@ export default function CheckForm({ addCheck , onClose }) {
         type="number"
         step="0.01"
         {...register("amount", {
-          required: "El monto es obligatorio",
+          required: "*El monto es obligatorio",
           min: { value: 0, message: "El monto debe ser positivo" },
         })}
         placeholder="Monto"
@@ -108,7 +108,7 @@ export default function CheckForm({ addCheck , onClose }) {
       <input
         type="date"
         {...register("dateOfEmission", {
-          required: "La fecha de emisión es obligatoria",
+          required: "*La fecha de emisión es obligatoria",
         })}
       />
       {errors.dateOfEmission && <p className="form-error">{errors.dateOfEmission.message}</p>}
@@ -120,7 +120,7 @@ export default function CheckForm({ addCheck , onClose }) {
       <input
         type="date"
         {...register("dateOfExpiration", {
-          required: "La fecha de vencimiento es obligatoria",
+          required: "*La fecha de vencimiento es obligatoria",
         })}
       />
       {errors.dateOfExpiration && <p className="form-error">{errors.dateOfExpiration.message}</p>}
