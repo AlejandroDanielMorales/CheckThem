@@ -24,6 +24,7 @@ export default function Home() {
     <>
       <Banner />
       <div className="app-container">
+        <div className="buttons-section">
         <div className="tabs-selector">
           <button className="addCheckBtn" onClick={()=> setActiveCheckForm(true)}>Agregar cheque</button>
         </div>
@@ -32,6 +33,7 @@ export default function Home() {
           <button onClick={() => setActiveTab("actual")} className={activeTab === "actual" ? "active" : ""}>🕒 Cheques en fecha</button>
           <button onClick={() => setActiveTab("next")} className={activeTab === "next" ? "active" : ""}>📋 Cheques emitidos</button>
         </div>
+      </div>
          {activeCheckForm === true && (
            <CheckForm addCheck={addCheck} onClose={setActiveCheckForm}/>
           )}

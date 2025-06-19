@@ -1,7 +1,6 @@
 .lists-container {
     display: flex;
-    max-width: 30dvw;
-    min-width: 30dvw;
+    max-width: 60dvw;
     min-height: 80vh;
     align-items: flex-start;
     margin: 0 auto;
@@ -9,11 +8,13 @@
       text-align: center;
     }
   }
-  
+  .addCheckBtn {
+    width: 100%;
+    }
   .task-container {
     flex: 1;
     min-width: 300px;
-    max-width: 50%;
+    max-width:60dvw;
     max-height: 60vh;
     height: 60vh;
     overflow-y: scroll;
@@ -46,6 +47,10 @@
     border: 1px solid #ddd;
     min-height: 120px; /* Establece una altura mínima para todas las tarjetas */
   }
+  .buttons-section{
+    width:60dvw;
+    margin: auto;
+  }
   
   .task-item-content {
     flex-grow: 1;
@@ -56,6 +61,7 @@
   justify-content: center;
   gap: 10px;
   margin: 20px 0;
+  width:100%;
 }
 
 .tabs-selector button {
@@ -85,11 +91,13 @@
     }
   
     .task-container {
-      width: 90%;
-      max-width: 90%;
+      width: 90dvw;
+      max-width: 90dvw;
     }
-    .addCheckBtn {
-    width: 90%;
-    }
+     .buttons-section{
+    width:90dvw;
+    margin: auto;
+  }
+    
   }
   
