@@ -39,3 +39,26 @@ h2 {
   letter-spacing: 1.5px;
   text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
 }
+  
+  @media (max-width: 768px) {
+   .check-container {
+      padding: 1rem;
+      min-width: 90vw; 
+      display: block;/* Ajusta el ancho mínimo para pantallas pequeñas */
+    }
+    h2 {
+      font-size: 1.3rem; /* Reduce el tamaño del título en pantallas pequeñas */
+    }
+    .tab-button {
+      width:auto; /* Botones ocupan todo el ancho disponible */
+      flex: 1; /* Hace que los botones ocupen el mismo espacio */
+      margin: 2px 0; /* Espacio entre botones en columnas */
+      padding: 2px; /* Aumenta el padding para mejor usabilidad */
+    }
+    .tab-button {
+      width: 100%; /* Botones ocupan todo el ancho disponible */
+      text-align: center; /* Centra el texto dentro del botón */
+    } 
+
+  }
+  

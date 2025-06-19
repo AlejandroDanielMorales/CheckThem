@@ -15,6 +15,7 @@ export default function CheckForm({ addCheck , onClose }) {
   async function handleAddCheck(data) {
   const checkData = {
     providerName: data.providerName,
+    checkNumber: data.checkNumber,
     amount: parseFloat(data.amount),
     dateOfEmission: new Date(data.dateOfEmission),
     dateOfExpiration: new Date(data.dateOfExpiration),
@@ -45,7 +46,7 @@ export default function CheckForm({ addCheck , onClose }) {
     } catch (error) {
       Swal.fire({
         title: 'Error',
-        text: 'Hubo un problema al agregar el cheque.',
+        text: `Hubo un problema al agregar el cheque.${error.message}`,
         icon: 'error',
       });
     }
@@ -66,7 +67,16 @@ export default function CheckForm({ addCheck , onClose }) {
         placeholder="Nombre del proveedor"
       />
       {errors.providerName && <p className="form-error">{errors.providerName.message}</p>}
-
+       <input
+        type="text"
+        {...register("checkNumber", {
+          required: "El número de cheque es obligatorio",
+          maxLength: { value: 100, message: "Máximo 100 caracteres" },
+        })}
+        placeholder="Número de cheque"
+      />
+      {errors.checkNumber && <p className="form-error">{errors.checkNumber.message}</p>}
+      
       <input
         type="number"
         step="0.01"

@@ -1,7 +1,6 @@
 .lists-container {
     display: flex;
     justify-content: center;
-    gap: 20px;
     max-width: 30dvw;
     min-width: 30dvw;
     min-height: 80vh;

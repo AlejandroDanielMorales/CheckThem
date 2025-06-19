@@ -38,6 +38,9 @@ export default function CheckList({ checks }) {
             <div className="check-header">
               <FaMoneyCheckAlt className="icon" />
               <span className="check-title">{check.providerName}</span>
+              {check.checkNumber ? (
+                <span className="check-number">#{check.checkNumber}</span>
+              ) : "#000"}
 
               <span className={getStateClass(check.state)}>
                 {getStateLabel(check.state)}

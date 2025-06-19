@@ -18,31 +18,34 @@ function CheckProvider({ children }) {
 
   // 🔄 Cargar cheques desde MongoDB al iniciar
   useEffect(() => {
-    const fetchChecks = async () => {
-      try {
-        const res = await axios.get(`${API_URL}/checks`); 
-        const data = res.data;
-
-        const mapped = data.map((item) => ({
-  _id: item._id,
-  amount: item.amount,
-  checkNumber: item.checkNumber,
-  state: item.state,
-  text: `Cheque de ${item.providerName} - Monto $${item.amount}`,
-  dateOfEmission: new Date(item.dateOfEmission), // ✅ conservar como Date
-  dateOfExpiration: new Date(item.dateOfExpiration), // ✅
-  providerName: item.providerName,
-}));
-
-
-        setChecks(mapped);
-      } catch (error) {
-        console.error("Error al cargar cheques desde la API:", error);
-      }
-    };
-
     fetchChecks();
   }, []);
+
+  useEffect(() => {
+    fetchChecks();
+  }, [checks]);
+
+const fetchChecks = async () => {
+    try {
+      const res = await axios.get(`${API_URL}/checks`);
+      const data = res.data;
+
+      const checks = data.map((item) => ({
+        _id: item._id,
+        amount: item.amount,
+        checkNumber: item.checkNumber,
+        state: item.state,
+        dateOfEmission: new Date(item.dateOfEmission),
+        dateOfExpiration: new Date(item.dateOfExpiration),
+        providerName: item.providerName,
+      }));
+
+      setChecks(checks); // Asegurate de tener esta función de estado
+    } catch (err) {
+      console.error("Error al cargar cheques:", err);
+    }
+  };
+
 
   // 🟢 Simula agregar cheque local (esto se puede extender para hacer un POST a la API)
 const addCheck = async (check) => {
@@ -61,10 +64,16 @@ const addCheck = async (check) => {
 
 
   // ✅ Simula marcar como pagado (debería hacer un PUT/PATCH a la API si querés persistir)
-   const performCheck = async (id) => {
-    const accept = confirm("Desea marcar como cobrado este cheque?");
-    if (accept) {
-      const formattedDate = new Date().toLocaleString();
+  const performCheck = async (id) => {
+    const result = await Swal.fire({
+    title: '¿Cobrar cheque?',
+    text: '¿Estás seguro que querés marcar como cobrado este cheque?',
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonText: 'Cobrar',
+    cancelButtonText: 'Cancelar',
+  });
+    if (result.isConfirmed) {
       const updatedChecks = checks.map((check) =>
         check.id === id
           ? { ...check, state: "payed"}
@@ -72,7 +81,7 @@ const addCheck = async (check) => {
       );
       setChecks(updatedChecks);
 
-      await axios.put(`${API_URL}/checks/${id}`, { payed: true });
+      await axios.put(`${API_URL}/checks/${id}`, { state: "payed" });
     }
   };
   
@@ -92,7 +101,7 @@ const addCheck = async (check) => {
     }
   };
 
- const editCheck = async (id , updatedData ) => {
+const editCheck = async (id , updatedData ) => {
   const result = await Swal.fire({
     title: '¿Editar cheque?',
     text: '¿Estás seguro que querés editar este cheque?',
@@ -107,7 +116,7 @@ const addCheck = async (check) => {
       await axios.put(`${API_URL}/checks/${id}`,updatedData);
       Swal.fire('Editado', 'El cheque fue editado correctamente.', 'success');
     } catch (error) {
-      Swal.fire('Error', 'No se pudo editar el cheque.', 'error');
+      Swal.fire('Error', `Hubo un problema al editar el cheque.${error.message}`, 'error');
     }
   }
 };

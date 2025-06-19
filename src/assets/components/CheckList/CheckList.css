@@ -11,9 +11,8 @@
 
 /* Grid tarjetas */
 .check-cards-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(20dvw, 1fr));
-  gap: 1rem;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Tarjeta cheque */
@@ -46,11 +45,10 @@
   font-weight: 700;
   font-size: 1rem;
   color: #2c3e50;
-  margin-bottom: 1rem;
 }
 
 .check-header .icon {
-  font-size: 1rem;
+  font-size: 2rem;
   color: #2980b9;
   margin-right: 0.8rem;
 }
@@ -184,12 +182,21 @@
   }
 }
 /* Media Query para pantallas grandes (ordenadores) */
-@media screen and (min-width: 1024px) {
+@media screen and (max-width: 768px) {
   .check-container h2 {
     font-size: 1.8rem; /* Más pequeño en desktop */
   }
-  
+  .check-title {
+  font-size: 1.2rem; /* Más pequeño en desktop */
+}
+  .status-tag {
+    font-size: 0.8rem; 
+     padding: 0.1rem 0.6rem;/* Más pequeño en desktop */
+  }
   .check-list .check-item {
-    font-size: 1rem; /* Más pequeño en desktop */
+    font-size: 3rem; /* Más pequeño en desktop */
+  }
+  .check-header .icon{
+    font-size: 1.2rem; /* Aumenta el tamaño del texto del header */
   }
 }
