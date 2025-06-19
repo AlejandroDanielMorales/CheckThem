@@ -39,7 +39,7 @@ export default function LoginForm({ onLoginSuccess }) {
     <div className="login-form-container">
       <h2>Iniciar sesión</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="input-group">
+        <div className="input-group-1">
           <input
             type="email"
             placeholder="Correo electrónico"
@@ -54,7 +54,7 @@ export default function LoginForm({ onLoginSuccess }) {
           {errors.email && <p className="error">{errors.email.message}</p>}
         </div>
 
-        <div className="input-group">
+        <div className="input-group-1">
           <input
             type="password"
             placeholder="Contraseña"
