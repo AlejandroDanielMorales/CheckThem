@@ -25,12 +25,14 @@
   font-size: 1rem;
   color: #2c3e50;
 }
-
+.input-group{
+ position: relative;
+ margin-bottom:0.85rem ;
+}
 .check-form input {
   padding: 0.3rem 0.5rem;
   border: 1px solid #ccc;
-  position: relative;
-  margin-bottom:0.85rem ;
+ 
   border-radius: 10px;
   transition: border-color 0.2s ease;
 }
@@ -72,6 +74,7 @@
   font-size: 0.85rem;
   font-style: italic;
   position: absolute;
+  bottom: 0; 
 }
 .modal-overlay {
   position: fixed;

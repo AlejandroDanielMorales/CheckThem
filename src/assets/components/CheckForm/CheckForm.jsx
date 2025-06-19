@@ -59,6 +59,8 @@ export default function CheckForm({ addCheck , onClose }) {
     <div className="modal-overlay">
     <form onSubmit={handleSubmit(handleAddCheck)} className="check-form">
       <h3>Agregar Cheque</h3>
+
+      <div className="input-group">
       <label>Nombre de proveedor</label>
       <input
         type="text"
@@ -69,6 +71,10 @@ export default function CheckForm({ addCheck , onClose }) {
         placeholder="Nombre del proveedor"
       />
       {errors.providerName && <p className="form-error">{errors.providerName.message}</p>}
+         </div>
+       <div className="input-group">
+        
+    
        <label>Nro de cheque</label>
        <input
         type="text"
@@ -79,6 +85,10 @@ export default function CheckForm({ addCheck , onClose }) {
         placeholder="Número de cheque"
       />
       {errors.checkNumber && <p className="form-error">{errors.checkNumber.message}</p>}
+        </div>
+      <div className="input-group">
+        
+     
       <label>Monto</label>
       <input
         type="number"
@@ -90,6 +100,9 @@ export default function CheckForm({ addCheck , onClose }) {
         placeholder="Monto"
       />
       {errors.amount && <p className="form-error">{errors.amount.message}</p>}
+       </div>
+<div className="input-group">
+        
 
       <label>Fecha de emisión</label>
       <input
@@ -99,7 +112,10 @@ export default function CheckForm({ addCheck , onClose }) {
         })}
       />
       {errors.dateOfEmission && <p className="form-error">{errors.dateOfEmission.message}</p>}
-
+      </div>
+<div className="input-group">
+        
+      
       <label>Fecha de vencimiento</label>
       <input
         type="date"
@@ -108,7 +124,7 @@ export default function CheckForm({ addCheck , onClose }) {
         })}
       />
       {errors.dateOfExpiration && <p className="form-error">{errors.dateOfExpiration.message}</p>}
-
+</div>
       <button type="submit">Agregar cheque</button>
       <button type="button" onClick={() => onClose(false)}>Cancelar</button>
 
