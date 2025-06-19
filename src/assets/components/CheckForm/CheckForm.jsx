@@ -58,6 +58,8 @@ export default function CheckForm({ addCheck , onClose }) {
 
     <div className="modal-overlay">
     <form onSubmit={handleSubmit(handleAddCheck)} className="check-form">
+      <h3>Agregar Cheque</h3>
+      <label>Nombre de proveedor</label>
       <input
         type="text"
         {...register("providerName", {
@@ -67,6 +69,7 @@ export default function CheckForm({ addCheck , onClose }) {
         placeholder="Nombre del proveedor"
       />
       {errors.providerName && <p className="form-error">{errors.providerName.message}</p>}
+       <label>Nro de cheque</label>
        <input
         type="text"
         {...register("checkNumber", {
@@ -76,7 +79,7 @@ export default function CheckForm({ addCheck , onClose }) {
         placeholder="Número de cheque"
       />
       {errors.checkNumber && <p className="form-error">{errors.checkNumber.message}</p>}
-      
+      <label>Monto</label>
       <input
         type="number"
         step="0.01"
