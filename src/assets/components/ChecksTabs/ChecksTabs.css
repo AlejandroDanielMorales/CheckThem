@@ -46,8 +46,12 @@ h2 {
       min-width: 90vw; 
       display: block;/* Ajusta el ancho mínimo para pantallas pequeñas */
     }
+    .check-container{
+   
     h2 {
-      font-size: 1.3rem; /* Reduce el tamaño del título en pantallas pequeñas */
+      font-size: 1.5rem;
+    }
+       
     }
     .tab-button {
       width:auto; /* Botones ocupan todo el ancho disponible */
